@@ -1,0 +1,264 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+}
+
+/*header style*/
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+h1 span {
+  color: #007bff;
+  font-weight: 700;
+}
+
+/* Default light mode */
+body.light-mode {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Customize other elements as needed */
+.navbar.light-mode {
+  background-color: #f8f9fa;
+}
+
+.navbar.dark-mode {
+  background-color: #343a40;
+}
+
+.task-table {
+  border-radius: 8px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-family: 'Roboto', sans-serif;
+  /* Use Roboto in the table */
+}
+
+.task-table th {
+  background-color: #007bff;
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.task-table td {
+  border-bottom: 1px solid #ddd;
+}
+
+.task-table td.abbreviation p {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal !important;
+  text-align: justify;
+  min-width: 10em;
+  max-width: 34em;
+}
+
+.task-table tr {
+  transition: background-color 0.3s;
+}
+
+.task-table tr:hover {
+  background-color: #e9ecef;
+}
+
+.status {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.status.pending {
+  color: #ffc107;
+}
+
+.status.in-progress {
+  color: #17a2b8;
+}
+
+.status.completed {
+  color: #28a745;
+}
+
+.action-btn {
+  transition: background-color 0.3s, color 0.3s;
+  font-weight: 500;
+  /* Medium weight for buttons */
+  font-size: 14px;
+}
+
+.action-btn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.ml-2 {
+  margin-left: 10px;
+}
+
+/* moda css */
+.modal-content {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  /* Gradient background */
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.modal-header {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px 15px 0 0;
+}
+
+.modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+button.close {
+  font-size: 1.5rem;
+  color: white;
+  opacity: 0.7;
+  background: transparent;
+  border: none;
+  transition: opacity 0.3s ease;
+}
+
+button.close:hover {
+  opacity: 1;
+}
+
+.modal-body {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 12px 18px;
+  border: 1px solid #ccc;
+  margin-bottom: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #6a11cb;
+  box-shadow: 0 0 10px rgba(106, 17, 203, 0.2);
+}
+
+.select-custom {
+  border-radius: 8px;
+  padding: 12px 18px;
+  border: 1px solid #ccc;
+  margin-bottom: 16px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+button {
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #2575fc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #1d64d0;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.modal {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* src/index.css or your custom CSS file */
+
+/* Custom style for the Add Task button */
+.custom-add-task-btn {
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  /* Gradient background */
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.custom-add-task-btn:hover {
+  background: linear-gradient(to right, #2575fc, #6a11cb);
+  /* Reverse gradient on hover */
+  transform: translateY(-2px);
+}
+
+.custom-add-task-btn:active {
+  transform: translateY(0);
+}
+
+.custom-add-task-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
