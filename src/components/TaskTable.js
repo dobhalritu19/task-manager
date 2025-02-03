@@ -1,5 +1,5 @@
 // src/TaskTable.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask, updateTask } from '../redux/tasksSlice';
@@ -7,7 +7,7 @@ import { FaEdit, FaTrashAlt } from 'react-icons/fa';  // Import React Icons
 
 const TaskTable = ({ setSelectedTask, handleShow }) => {
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks.tasks || []); // Access tasks from Redux store
+  const tasks = useSelector((state) => state.tasks.tasks); // Access tasks from Redux store
 
   const handleDelete = (id) => {
     dispatch(deleteTask(id));
