@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { addTask, updateTask } from '../redux/tasksSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 const AddTaskModal = ({ selectedTask, showModal, handleClose }) => {
+  console.log("modal render");
+  setTimeout(() => {
+    console.log("modal hehehhheeheheh");
+  }, 3000)
+
   const dispatch = useDispatch();
+
   const [task, setTask] = useState({
     title: '',
     description: '',
@@ -13,27 +19,30 @@ const AddTaskModal = ({ selectedTask, showModal, handleClose }) => {
     status: 'Pending',
   });
 
+  // Optimized useEffect to prevent unnecessary updates
   useEffect(() => {
-    if (Object.keys(selectedTask).length > 0) {
-      setTask({ ...selectedTask }); // Populate the form with task data when editing
+    if (selectedTask && selectedTask.id) {
+      setTask({ ...selectedTask }); // Populate the form when editing
     } else {
       setTask({
         title: '',
         description: '',
         dueDate: '',
         status: 'Pending',
-      })
+      });
     }
   }, [selectedTask]);
 
   const [errors, setErrors] = useState({});
 
-  const handleInputChange = (e) => {
+  // Memoize handleInputChange to avoid re-creations
+  const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
-    setTask({ ...task, [name]: value });
-  };
+    setTask((prevTask) => ({ ...prevTask, [name]: value }));
+  }, []);
 
-  const validateForm = () => {
+  // Validate form inputssss
+  const validateForm = useCallback(() => {
     let newErrors = {};
 
     if (!task.title.trim()) {
@@ -53,12 +62,13 @@ const AddTaskModal = ({ selectedTask, showModal, handleClose }) => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  }, [task]);
 
-  const handleSubmit = (e) => {
+  // Memoize handleSubmit to prevent re-creations
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     if (validateForm()) {
-      if (Object.keys(selectedTask).length > 0) {
+      if (selectedTask && selectedTask.id) {
         dispatch(updateTask({ ...task, id: task.id }));
       } else {
         dispatch(addTask({ ...task, id: uuidv4() })); // Add an id for the task
@@ -67,12 +77,12 @@ const AddTaskModal = ({ selectedTask, showModal, handleClose }) => {
 
       handleClose();
     }
-  };
+  }, [task, selectedTask, dispatch, validateForm, handleClose]);
 
   return (
     <Modal show={showModal} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Add New Task</Modal.Title>
+        <Modal.Title>{selectedTask?.id ? 'Update Task' : 'Add New Task'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -136,7 +146,7 @@ const AddTaskModal = ({ selectedTask, showModal, handleClose }) => {
               Cancel
             </Button>
             <Button variant="primary" type="submit">
-              {Object.keys(selectedTask).length > 0 ? 'Update Task' : 'Add Task'}
+              {selectedTask?.id ? 'Update Task' : 'Add Task'}
             </Button>
           </div>
         </Form>
@@ -145,4 +155,4 @@ const AddTaskModal = ({ selectedTask, showModal, handleClose }) => {
   );
 };
 
-export default AddTaskModal;
+export default React.memo(AddTaskModal);

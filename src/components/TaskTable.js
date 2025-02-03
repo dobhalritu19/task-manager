@@ -1,27 +1,31 @@
-// src/TaskTable.js
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Table, Button, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask, updateTask } from '../redux/tasksSlice';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';  // Import React Icons
 
 const TaskTable = ({ setSelectedTask, handleShow }) => {
+  console.log("table render");
+
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks.tasks || []); // Access tasks from Redux store
+  const tasksFromStore = useSelector((state) => state.tasks.tasks); // Access tasks from Redux store
 
-  const handleDelete = (id) => {
+  // Memoizing tasks array to avoid unnecessary recalculations
+  const tasks = useMemo(() => tasksFromStore, [tasksFromStore]);
+
+  // Memoize delete, complete, and edit handlers
+  const handleDelete = useCallback((id) => {
     dispatch(deleteTask(id));
-  };
+  }, [dispatch]);
 
-  const handleComplete = (task) => {
+  const handleComplete = useCallback((task) => {
     dispatch(updateTask({ ...task, status: task.status === 'Completed' ? 'Pending' : 'Completed' }));
-  };
+  }, [dispatch]);
 
-  const handleEdit = (task) => {
-    // Open your Edit modal here and pass task
-    setSelectedTask(task)
+  const handleEdit = useCallback((task) => {
+    setSelectedTask(task);
     handleShow();
-  };
+  }, [setSelectedTask, handleShow]);
 
   const getRowClass = (task) => {
     const currentDate = new Date();
@@ -37,22 +41,17 @@ const TaskTable = ({ setSelectedTask, handleShow }) => {
       return 'table-danger';
     }
 
-    return 'table-warning';//for Pending
+    return 'table-warning'; // for Pending
   };
-
 
   return (
     <Card className="shadow-sm rounded-lg">
       <Card.Body>
         <Table responsive className="task-table">
           <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Due Date</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
+            {['Title', 'Description', 'Due Date', 'Status', 'Actions'].map((header) => (
+              <th key={header}>{header}</th>
+            ))}
           </thead>
           <tbody>
             {tasks.length === 0 ? (
@@ -100,4 +99,4 @@ const TaskTable = ({ setSelectedTask, handleShow }) => {
   );
 };
 
-export default TaskTable;
+export default React.memo(TaskTable);

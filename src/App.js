@@ -4,21 +4,26 @@ import { ThemeProvider } from './context/ThemeContext';
 import Header from './components/Header';
 import TaskTable from './components/TaskTable';
 import AddTaskModal from './components/AddTaskModal';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [task, setTask] = useState({}); // set edited tasks
 
   // Function to handle modal open
-  const handleShow = () => setShowModal(true);
+  const handleShow = useCallback(() => {
+    setShowModal(true);
+  }, [])
 
   // Function to handle modal close
-  const handleClose = () => {
+
+  const handleClose = useCallback(() => {
     setTask({})
     setShowModal(false)
-  };
+  }, [])
 
+  // Memoized function for setting the selected task
+  const setSelectedTask = useCallback((e) => setTask(e), []);
 
   return (
     <ThemeProvider>
@@ -30,17 +35,21 @@ function App() {
           Add Task
         </Button>
         <TaskTable
-          setSelectedTask={(e) => setTask(e)}
+          setSelectedTask={setSelectedTask}
           handleShow={handleShow}
         /> {/* Pass tasks data to the TaskTable */}
       </Container>
 
       {/* AddTaskModal component */}
-      <AddTaskModal
-        selectedTask={task}
-        showModal={showModal}
-        handleClose={handleClose}
-      />
+      {
+        showModal &&
+        <AddTaskModal
+          selectedTask={task}
+          showModal={showModal}
+          handleClose={handleClose}
+        />
+      }
+
     </ThemeProvider>
   );
 }
