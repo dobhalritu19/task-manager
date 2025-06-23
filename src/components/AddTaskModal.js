@@ -41,7 +41,10 @@ const AddTaskModal = ({ selectedTask, showModal, handleClose }) => {
     setTask((prevTask) => ({ ...prevTask, [name]: value }));
   }, []);
 
-  // use Validate form input
+  // use Validate form input1
+  // use Validate form input2
+  // use Validate form input2
+
   const validateForm = useCallback(() => {
     let newErrors = {};
 
